@@ -13,7 +13,7 @@ A futuristic, browser-based AI voice assistant that listens, thinks, and speaks.
 - Speak your query naturally, and JARVIS will respond.
 - Uses **Web Speech API** for voice recognition and synthesis.
 
-![Voice Activation](https://your-image-link.com/voice.png)
+![Voice Activation]
 
 ---
 
@@ -21,7 +21,7 @@ A futuristic, browser-based AI voice assistant that listens, thinks, and speaks.
 - Backed by **Google Gemini** API for conversational AI.
 - Ask anything—facts, jokes, summaries, or explanations.
 
-![Gemini Chat](https://your-image-link.com/chat.png)
+![Gemini Chat]
 
 ---
 
@@ -29,7 +29,7 @@ A futuristic, browser-based AI voice assistant that listens, thinks, and speaks.
 - Talk to JARVIS in **English**, **Spanish**, **French**, **German**, or **Hindi**.
 - Just switch the language from the dropdown menu.
 
-![Language Dropdown](https://your-image-link.com/languages.png)
+![Language Dropdown]
 
 ---
 
@@ -37,7 +37,7 @@ A futuristic, browser-based AI voice assistant that listens, thinks, and speaks.
 - Upload a `.pdf` file and JARVIS will read it aloud.
 - Uses **FileReader API** + browser speech synthesis.
 
-![PDF Reader](https://your-image-link.com/pdf.png)
+![PDF Reader]
 
 ---
 
@@ -49,11 +49,6 @@ A futuristic, browser-based AI voice assistant that listens, thinks, and speaks.
 
 ---
 
-### 🎶 YouTube Playback
-- Say: _"Play Shape of You on YouTube"_
-- JARVIS will open YouTube search results in a new tab.
-
----
 
 ### 📝 Personalized Session
 - JARVIS remembers your name and tailors interactions accordingly.
@@ -72,9 +67,9 @@ A futuristic, browser-based AI voice assistant that listens, thinks, and speaks.
   - Tablet 📱
   - Mobile 📞
 
-![Responsive](https://your-image-link.com/responsive.png)
+![Responsive]
 
----
+
 
 ## 🛠️ Tech Stack
 
