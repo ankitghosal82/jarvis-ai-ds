@@ -1,30 +1,112 @@
-# Javis clone
+# 🤖 JARVIS – AI Voice Assistant (Web Version)
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+A futuristic, browser-based AI voice assistant that listens, thinks, and speaks. Inspired by Iron Man’s JARVIS, this assistant provides intelligent, natural responses, plays music, reads PDFs aloud, and even chats in multiple languages.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ankitghosal43-8024s-projects/v0-javis-clone)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/e6wjqHRgYGC)
+[🔗 Live Demo](https://jarvisaiassistant.vercel.app/)
 
-## Overview
+---
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## 🌟 Features
 
-## Deployment
+### 🎙️ Voice Activation
+- Click the glowing orb to start listening.
+- Speak your query naturally, and JARVIS will respond.
+- Uses **Web Speech API** for voice recognition and synthesis.
 
-Your project is live at:
+![Voice Activation](https://your-image-link.com/voice.png)
 
-**[https://vercel.com/ankitghosal43-8024s-projects/v0-javis-clone](https://vercel.com/ankitghosal43-8024s-projects/v0-javis-clone)**
+---
 
-## Build your app
+### 💬 Gemini-Powered Chat
+- Backed by **Google Gemini** API for conversational AI.
+- Ask anything—facts, jokes, summaries, or explanations.
 
-Continue building your app on:
+![Gemini Chat](https://your-image-link.com/chat.png)
 
-**[https://v0.dev/chat/projects/e6wjqHRgYGC](https://v0.dev/chat/projects/e6wjqHRgYGC)**
+---
 
-## How It Works
+### 🌐 Multilingual Support
+- Talk to JARVIS in **English**, **Spanish**, **French**, **German**, or **Hindi**.
+- Just switch the language from the dropdown menu.
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+![Language Dropdown](https://your-image-link.com/languages.png)
+
+---
+
+### 📄 PDF Reader
+- Upload a `.pdf` file and JARVIS will read it aloud.
+- Uses **FileReader API** + browser speech synthesis.
+
+![PDF Reader](https://your-image-link.com/pdf.png)
+
+---
+
+### 📖 Wikipedia Integration
+- Ask questions like:
+  - “Who is Nikola Tesla?”
+  - “What is Quantum Computing?”
+- JARVIS will fetch and summarize results from Wikipedia.
+
+---
+
+### 🎶 YouTube Playback
+- Say: _"Play Shape of You on YouTube"_
+- JARVIS will open YouTube search results in a new tab.
+
+---
+
+### 📝 Personalized Session
+- JARVIS remembers your name and tailors interactions accordingly.
+
+---
+
+### 🔊 Text-to-Speech Output
+- Every response is read out loud using your browser’s **SpeechSynthesis API**.
+- Natural, fluid speech on all devices.
+
+---
+
+### 🖥️ Responsive UI
+- Clean, intuitive interface optimized for:
+  - Desktop 💻
+  - Tablet 📱
+  - Mobile 📞
+
+![Responsive](https://your-image-link.com/responsive.png)
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer        | Technology                     |
+|--------------|--------------------------------|
+| **Frontend** | HTML, CSS, JavaScript          |
+| **APIs**     | Google Gemini, Wikipedia API   |
+| **Voice**    | Web Speech API (Speech & Listen) |
+| **Hosting**  | Vercel                         |
+
+---
+
+## 🚀 How to Use
+
+1. **Go to the live app**:  
+   [https://jarvisaiassistant.vercel.app/](https://jarvisaiassistant.vercel.app/)
+
+2. **Start Session**:  
+   Enter your name → Click Submit.
+
+3. **Give Commands**:  
+   - **Voice**: Click orb and speak.  
+   - **Text**: Type in command box and press Enter.
+
+4. **Change Language**:  
+   Use dropdown to switch between supported languages.
+
+---
+
+## 🧑‍💻 How to Run Locally
+
+```bash
+git clone https://github.com/yourusername/jarvis-voice-assistant.git
+cd jarvis-voice-assistant
+open index.html in browser
