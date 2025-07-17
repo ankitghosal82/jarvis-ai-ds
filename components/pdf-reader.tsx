@@ -5,11 +5,8 @@ import type React from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Upload, Volume2, VolumeX } from "lucide-react"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import * as pdfjs from "pdfjs-dist"
-
-// Set the worker source for pdf.js
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
 
 interface PdfReaderProps {
   onPdfContentExtracted: (content: string) => void
@@ -22,6 +19,15 @@ interface PdfReaderProps {
 export function PdfReader({ onPdfContentExtracted, onReadPdf, isReading, stopReading, pdfContent }: PdfReaderProps) {
   const [fileName, setFileName] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Set the worker source for pdf.js once on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined" && pdfjs.GlobalWorkerOptions) {
+      pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
+    } else {
+      console.error("pdfjs.GlobalWorkerOptions is undefined. PDF.js might not be fully loaded.")
+    }
+  }, []) // Empty dependency array ensures it runs only once
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]

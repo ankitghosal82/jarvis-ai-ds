@@ -18,11 +18,13 @@ export async function POST(req: Request) {
     Keep responses concise and helpful.`
 
     if (pdfContent) {
-      systemPrompt += `\n\nUser has provided the following PDF content for context:
-      ---PDF CONTENT START---
-      ${pdfContent}
-      ---PDF CONTENT END---
-      If the user asks questions about this PDF content (e.g., "summarize this chapter", "what is the main idea of section 3?"), use the provided text to answer. Otherwise, ignore the PDF content.`
+      systemPrompt += `
+
+User has provided the following PDF content for context:
+    ---PDF CONTENT START---
+    ${pdfContent}
+    ---PDF CONTENT END---
+    If the user asks questions about this PDF content (e.g., "summarize this chapter", "what is the main idea of section 3?"), use the provided text to answer. Otherwise, ignore the PDF content.`
     }
 
     const { text } = await generateText({

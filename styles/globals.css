@@ -92,3 +92,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* This file is intentionally left empty. */
+/* All global styles are handled in app/globals.css */

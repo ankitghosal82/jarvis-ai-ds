@@ -8,15 +8,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Send, XCircle } from "lucide-react"
 import { JarvisOrb } from "@/components/jarvis-orb"
 import { LanguageSelector } from "@/components/language-selector"
-// import { PdfReader } from "@/components/pdf-reader" // Removed direct import
+import { PdfReader } from "@/components/pdf-reader"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
-import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
-import dynamic from "next/dynamic" // Import dynamic
-
-// Dynamically import PdfReader with ssr: false
-const PdfReader = dynamic(() => import("@/components/pdf-reader").then((mod) => mod.PdfReader), { ssr: false })
 
 interface Message {
   sender: "user" | "jarvis"
@@ -291,7 +286,7 @@ export default function JarvisAssistant() {
             text: "PDF content extracted. You can now ask me questions about it, or ask me to read it aloud.",
           },
         ])
-        speakText("PDF content extracted. You can now ask me questions about it, or ask me to read it aloud.")
+        speakText("PDF content extracted. You can now ask me questions about it, or read it aloud.")
       } else {
         setConversation((prev) => [...prev, { sender: "jarvis", text: "Failed to extract content from PDF." }])
         speakText("Failed to extract content from PDF.")
@@ -351,108 +346,103 @@ export default function JarvisAssistant() {
   }
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-      <main className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 dark:from-gray-900 dark:to-gray-700 light:from-gray-100 light:to-gray-300 p-4 text-white dark:text-white light:text-gray-900">
-        <Card className="w-full max-w-3xl h-[90vh] flex flex-col bg-gray-800 dark:bg-gray-800 light:bg-white text-white dark:text-white light:text-gray-900 border-gray-700 dark:border-gray-700 light:border-gray-300 shadow-xl">
-          <CardHeader className="flex flex-row items-center justify-between border-b border-gray-700 dark:border-gray-700 light:border-gray-200 pb-4">
-            <CardTitle className="text-2xl font-bold text-blue-400 dark:text-blue-400 light:text-blue-600">
-              JARVIS AI Assistant
-            </CardTitle>
-            <div className="flex items-center space-x-2">
-              <Avatar>
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User Avatar" />
-                <AvatarFallback className="bg-blue-500 text-white">{userName.charAt(0).toUpperCase()}</AvatarFallback>
-              </Avatar>
-              <span className="font-medium text-gray-300 dark:text-gray-300 light:text-gray-700">{userName}</span>
-              <ThemeToggle />
-            </div>
-          </CardHeader>
-          <CardContent className="flex-1 flex flex-col p-4 overflow-hidden">
-            <ScrollArea className="flex-1 pr-4">
-              <div className="space-y-4">
-                {conversation.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={cn("flex items-start gap-3", msg.sender === "user" ? "justify-end" : "justify-start")}
-                  >
-                    {msg.sender === "jarvis" && (
-                      <Avatar>
-                        <AvatarImage src="/placeholder.svg?height=32&width=32" alt="JARVIS Avatar" />
-                        <AvatarFallback className="bg-gray-600 text-blue-400">AI</AvatarFallback>
-                      </Avatar>
-                    )}
-                    <div
-                      className={cn(
-                        "max-w-[70%] p-3 rounded-lg",
-                        msg.sender === "user"
-                          ? "bg-blue-600 text-white rounded-br-none"
-                          : "bg-gray-700 dark:bg-gray-700 light:bg-gray-100 text-gray-100 dark:text-gray-100 light:text-gray-900 rounded-bl-none",
-                      )}
-                    >
-                      <p className="text-sm">{renderMessageContent(msg.text)}</p>
-                    </div>
-                    {msg.sender === "user" && (
-                      <Avatar>
-                        <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User Avatar" />
-                        <AvatarFallback className="bg-blue-500 text-white">
-                          {userName.charAt(0).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                    )}
-                  </div>
-                ))}
-                <div ref={chatEndRef} />
-              </div>
-            </ScrollArea>
-          </CardContent>
-          <div className="p-4 border-t border-gray-700 dark:border-gray-700 light:border-gray-200 flex flex-col items-center space-y-4">
-            <div className="flex items-center space-x-4 w-full">
-              <Input
-                type="text"
-                placeholder="Type your command or question..."
-                value={currentInput}
-                onChange={(e) => setCurrentInput(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSendClick()}
-                className="flex-1 bg-gray-700 dark:bg-gray-700 light:bg-gray-100 border-gray-600 dark:border-gray-600 light:border-gray-300 text-white dark:text-white light:text-gray-900 placeholder-gray-400 dark:placeholder-gray-400 light:placeholder-gray-500"
-                disabled={listening || speaking}
-              />
-              <Button
-                onClick={handleSendClick}
-                size="icon"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-                aria-label="Send message"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex items-center justify-center space-x-4 w-full">
-              <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
-              <JarvisOrb listening={listening} onClick={handleMicClick} disabled={speaking} />
-              {/* Render PdfReader only on client side */}
-              {typeof window !== "undefined" && (
-                <PdfReader
-                  onPdfContentExtracted={handlePdfContentExtracted}
-                  onReadPdf={readPdfContent}
-                  isReading={isPdfReading}
-                  stopReading={stopReadingPdf}
-                  pdfContent={pdfContent}
-                />
-              )}
-              {pdfContent && (
-                <Button
-                  onClick={clearPdfContent}
-                  variant="outline"
-                  size="icon"
-                  className="text-red-500 hover:text-red-600 bg-transparent"
-                  aria-label="Clear PDF content"
-                >
-                  <XCircle className="h-4 w-4" />
-                </Button>
-              )}
-            </div>
+    <main className="flex flex-col items-center justify-between min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 dark:from-gray-900 dark:to-gray-700 light:from-gray-100 light:to-gray-300 p-4 text-white dark:text-white light:text-gray-900">
+      <Card className="w-full max-w-3xl h-[90vh] flex flex-col bg-gray-800 dark:bg-gray-800 light:bg-white text-white dark:text-white light:text-gray-900 border-gray-700 dark:border-gray-700 light:border-gray-300 shadow-xl">
+        <CardHeader className="flex flex-row items-center justify-between border-b border-gray-700 dark:border-gray-700 light:border-gray-200 pb-4">
+          <CardTitle className="text-2xl font-bold text-blue-400 dark:text-blue-400 light:text-blue-600">
+            JARVIS AI Assistant
+          </CardTitle>
+          <div className="flex items-center space-x-2">
+            <Avatar>
+              <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User Avatar" />
+              <AvatarFallback className="bg-blue-500 text-white">{userName.charAt(0).toUpperCase()}</AvatarFallback>
+            </Avatar>
+            <span className="font-medium text-gray-300 dark:text-gray-300 light:text-gray-700">{userName}</span>
+            <ThemeToggle />
           </div>
-        </Card>
-      </main>
-    </ThemeProvider>
+        </CardHeader>
+        <CardContent className="flex-1 flex flex-col p-4 overflow-hidden">
+          <ScrollArea className="flex-1 pr-4">
+            <div className="space-y-4">
+              {conversation.map((msg, index) => (
+                <div
+                  key={index}
+                  className={cn("flex items-start gap-3", msg.sender === "user" ? "justify-end" : "justify-start")}
+                >
+                  {msg.sender === "jarvis" && (
+                    <Avatar>
+                      <AvatarImage src="/placeholder.svg?height=32&width=32" alt="JARVIS Avatar" />
+                      <AvatarFallback className="bg-gray-600 text-blue-400">AI</AvatarFallback>
+                    </Avatar>
+                  )}
+                  <div
+                    className={cn(
+                      "max-w-[70%] p-3 rounded-lg",
+                      msg.sender === "user"
+                        ? "bg-blue-600 text-white rounded-br-none"
+                        : "bg-gray-700 dark:bg-gray-700 light:bg-gray-100 text-gray-100 dark:text-gray-100 light:text-gray-900 rounded-bl-none",
+                    )}
+                  >
+                    <p className="text-sm">{renderMessageContent(msg.text)}</p>
+                  </div>
+                  {msg.sender === "user" && (
+                    <Avatar>
+                      <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User Avatar" />
+                      <AvatarFallback className="bg-blue-500 text-white">
+                        {userName.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+                </div>
+              ))}
+              <div ref={chatEndRef} />
+            </div>
+          </ScrollArea>
+        </CardContent>
+        <div className="p-4 border-t border-gray-700 dark:border-gray-700 light:border-gray-200 flex flex-col items-center space-y-4">
+          <div className="flex items-center space-x-4 w-full">
+            <Input
+              type="text"
+              placeholder="Type your command or question..."
+              value={currentInput}
+              onChange={(e) => setCurrentInput(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSendClick()}
+              className="flex-1 bg-gray-700 dark:bg-gray-700 light:bg-gray-100 border-gray-600 dark:border-gray-600 light:border-gray-300 text-white dark:text-white light:text-gray-900 placeholder-gray-400 dark:placeholder-gray-400 light:placeholder-gray-500"
+              disabled={listening || speaking}
+            />
+            <Button
+              onClick={handleSendClick}
+              size="icon"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              aria-label="Send message"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="flex items-center justify-center space-x-4 w-full">
+            <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
+            <JarvisOrb listening={listening} onClick={handleMicClick} disabled={speaking} />
+            <PdfReader
+              onPdfContentExtracted={handlePdfContentExtracted}
+              onReadPdf={readPdfContent}
+              isReading={isPdfReading}
+              stopReading={stopReadingPdf}
+              pdfContent={pdfContent}
+            />
+            {pdfContent && (
+              <Button
+                onClick={clearPdfContent}
+                variant="outline"
+                size="icon"
+                className="text-red-500 hover:text-red-600 bg-transparent"
+                aria-label="Clear PDF content"
+              >
+                <XCircle className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        </div>
+      </Card>
+    </main>
   )
 }
