@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { ChevronDown } from "lucide-react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
+import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -65,8 +65,7 @@ const NavigationMenuContent = React.forwardRef<
   <NavigationMenuPrimitive.Content
     ref={ref}
     className={cn(
-      "left-0 top-0 w-full data-[animate-in]:fade-in data-[animate-out]:fade-out data-[animate-in]:slide-in-from-top-1 data-[animate-out]:slide-out-to-top-1 md:absolute md:w-auto ",
-      "ease-in-out-quad data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+      "left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion^=from-]:zoom-in-95 data-[motion^=to-]:zoom-out-95 data-[orientation=horizontal]:slide-in-from-top-[--radix-navigation-menu-content-height] data-[orientation=vertical]:slide-in-from-left-[--radix-navigation-menu-content-width] data-[orientation=horizontal]:data-[motion^=from-]:slide-in-from-top-[--radix-navigation-menu-content-height] data-[orientation=vertical]:data-[motion^=from-]:slide-in-from-left-[--radix-navigation-menu-content-width] data-[orientation=horizontal]:data-[motion^=to-]:slide-out-to-top-[--radix-navigation-menu-content-height] data-[orientation=vertical]:data-[motion^=to-]:slide-out-to-left-[--radix-navigation-menu-content-width] md:absolute md:w-auto ",
       className,
     )}
     {...props}
@@ -83,8 +82,7 @@ const NavigationMenuViewport = React.forwardRef<
   <div className={cn("absolute left-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "relative origin-top-center overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg",
-        "h-[var(--radix-navigation-menu-viewport-height)] w-full data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        "relative h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 md:w-[var(--radix-navigation-menu-viewport-width)]",
         className,
       )}
       ref={ref}
@@ -106,7 +104,7 @@ const NavigationMenuIndicator = React.forwardRef<
     )}
     {...props}
   >
-    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+    <div className="relative top-[60%] h-2 w-2 rounded-tl-full bg-border shadow-md" />
   </NavigationMenuPrimitive.Indicator>
 ))
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { OTPInput, Slot, type OTPInputProps } from "input-otp"
+import { OTPInput, type Slot, type OTPInputProps } from "input-otp"
 import { Minus } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -27,28 +27,33 @@ const InputOTPSlot = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot> & { index: number }
 >(({ index, className, ...props }, ref) => (
-  <Slot
+  <div
     ref={ref}
-    index={index}
     className={cn(
       "relative flex h-9 w-9 items-center justify-center border-y border-r border-input text-sm shadow-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-      "focus:z-10 focus:border-ring focus:ring-2",
+      "focus-within:z-10",
       className,
     )}
     {...props}
   >
-    {/* {char} */}
-  </Slot>
+    {index}
+    {/* {isActive && (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="h-4 w-[1px] animate-caret-blink bg-foreground" />
+      </div>
+    )} */}
+  </div>
 ))
 InputOTPSlot.displayName = "InputOTPSlot"
 
-const InputOTPSeparator = React.forwardRef<React.ElementRef<typeof Slot>, React.ComponentPropsWithoutRef<typeof Slot>>(
-  ({ ...props }, ref) => (
-    <div ref={ref} role="separator" {...props}>
-      <Minus />
-    </div>
-  ),
-)
+const InputOTPSeparator = React.forwardRef<
+  React.ElementRef<typeof Minus>,
+  React.ComponentPropsWithoutRef<typeof Minus>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("flex items-center justify-center", className)} {...props}>
+    <Minus />
+  </div>
+))
 InputOTPSeparator.displayName = "InputOTPSeparator"
 
 export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }

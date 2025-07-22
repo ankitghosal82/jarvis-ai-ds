@@ -1,14 +1,21 @@
 "use client"
 
-import * as React from "react"
+import { useState, useEffect } from "react"
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
-  React.useEffect(() => {
-    const userAgent = typeof window.navigator === "undefined" ? "" : navigator.userAgent
-    const mobile = Boolean(userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i))
-    setIsMobile(mobile)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768) // Tailwind's 'md' breakpoint
+    }
+
+    checkMobile() // Check on initial mount
+    window.addEventListener("resize", checkMobile) // Add event listener for resize
+
+    return () => {
+      window.removeEventListener("resize", checkMobile) // Clean up on unmount
+    }
   }, [])
 
   return isMobile

@@ -35,7 +35,7 @@ export default function JarvisAssistant() {
 
   // Helper function to render text with Markdown links
   const renderMessageContent = (text: string) => {
-    const linkRegex = /\[(.*?)\]$$(.*?)$$/g // Standard Markdown link regex
+    const linkRegex = /\[(.*?)\]\$\$(.*?)\$\$/g // Custom Markdown link regex: [link text]$$url$$
     const parts = []
     let lastIndex = 0
     let match

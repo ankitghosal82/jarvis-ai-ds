@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "JARVIS AI Assistant",
-  description: "A voice-activated AI assistant inspired by JARVIS.",
+  title: "Jarvis AI Assistant",
+  description: "Your personal AI assistant, inspired by JARVIS.",
     generator: 'v0.dev'
 }
 

@@ -39,11 +39,11 @@ type Action =
     }
   | {
       type: typeof actionTypes.DISMISS_TOAST
-      toastId?: ToasterToast["id"]
+      toastId?: string
     }
   | {
       type: typeof actionTypes.REMOVE_TOAST
-      toastId?: ToasterToast["id"]
+      toastId?: string
     }
 
 interface State {
@@ -107,6 +107,12 @@ export const reducer = (state: State, action: Action): State => {
       }
     }
     case actionTypes.REMOVE_TOAST:
+      if (action.toastId === undefined) {
+        return {
+          ...state,
+          toasts: [],
+        }
+      }
       return {
         ...state,
         toasts: state.toasts.filter((t) => t.id !== action.toastId),
@@ -155,7 +161,7 @@ function toast({ ...props }: Toast) {
   }
 }
 
-export function useToast() {
+function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 
   React.useEffect(() => {
@@ -171,6 +177,10 @@ export function useToast() {
   return {
     ...state,
     toast,
-    dismiss: React.useCallback((toastId?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }), []),
+    dismiss: React.useCallback(function dismiss(toastId?: string) {
+      dispatch({ type: actionTypes.DISMISS_TOAST, toastId })
+    }, []),
   }
 }
+
+export { useToast, toast }

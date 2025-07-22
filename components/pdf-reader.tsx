@@ -23,7 +23,7 @@ export function PdfReader({ onPdfContentExtracted, onReadPdf, isReading, stopRea
   // Set the worker source for pdf.js once on component mount
   useEffect(() => {
     if (typeof window !== "undefined" && pdfjs.GlobalWorkerOptions) {
-      pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`
+      pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/build/pdf.worker.min.js`
     } else {
       console.error("pdfjs.GlobalWorkerOptions is undefined. PDF.js might not be fully loaded.")
     }
